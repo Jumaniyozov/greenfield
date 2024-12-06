@@ -16,10 +16,21 @@ jobs:
           go-version: ^1.23
       - name: Check out code into the Go module directory
         uses: actions/checkout@v2
-      - name: Downloads
-        run: go get -t ./...
-      - name: Test
-        run: go test -v ./...
+      - name: Run Test
+        run: make test
+      - name: Coverage check
+        run: make coverage
+      - name: Generate report
+        run: make report
+      - name: Copy Files
+        run: |
+          mkdir reports
+          cp coverage.html reports/.
+      - name: Archive
+        uses: actions/upload-artifact@v4
+        with:
+          name: reports
+          path: reports
 
   build:
     name: Build App

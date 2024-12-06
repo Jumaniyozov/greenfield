@@ -28,5 +28,8 @@ go.work.sum
 node_modules
 .vscode
 .idea
+coverage.out
+cover.xhtml
+cover.html
 
 api
