@@ -103,10 +103,16 @@ jobs:
         uses: actions/checkout@v2
         with:
           fetch-depth: 0
+
+      - name: Authenticate to Google Cloud
+        uses: google-github-actions/auth@v1
+        with:
+          credentials_json: ${{ secrets.gcp_credentials }}
       - name: Deploy App
         id: deploy
-        uses: google-github-actions/deploy-appengine@main
+        uses: google-github-actions/deploy-appengine@v1
         with:
-          credentials: ${{ secrets.gcp_credentials }}
+          deliverables: "app.yaml"
+          promote: true
       - id: test
         run: curl "${{ steps.deploy.outputs.url }}/translate/hello"
