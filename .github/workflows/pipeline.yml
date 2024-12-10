@@ -108,6 +108,14 @@ jobs:
         uses: google-github-actions/auth@v1
         with:
           credentials_json: ${{ secrets.gcp_credentials }}
+
+      - name: Setup Cloud SDK
+        uses: google-github-actions/setup-gcloud@v1
+        with:
+          project_id: "depo-444311"
+          export_default_credentials: true
+          install_components: "app-engine-go"
+
       - name: Deploy App
         id: deploy
         uses: google-github-actions/deploy-appengine@v1
