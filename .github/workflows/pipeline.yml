@@ -57,6 +57,7 @@ jobs:
 
 
   deliver:
+    permissions: write-all
     name: Release
     needs: build
     runs-on: ubuntu-latest
