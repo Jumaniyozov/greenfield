@@ -71,9 +71,6 @@ jobs:
         with:
           name: api
 
-      - name: Install GitHub CLI
-        uses: actions/setup-gh-cli@v3
-
       # Create a draft pre-release
       - name: Create Draft Prerelease
         run: |
