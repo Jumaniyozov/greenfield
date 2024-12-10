@@ -57,35 +57,33 @@ jobs:
 
 
   deliver:
-    permissions: write-all
+    permissions:
+      contents: write
     name: Release
     needs: build
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
+
       - name: Download binary
         uses: actions/download-artifact@v4
         with:
           name: api
-      - name: Create Release
-        id: create_release
-        uses: actions/create-release@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          tag_name: ${{ github.ref }}
-          release_name: Release ${{ github.ref }}
-          body: |
-            Still in experimentation phase
-          draft: true
-          prerelease: true
+
+      - name: Install GitHub CLI
+        uses: actions/setup-gh-cli@v3
+
+      # Create a draft pre-release
+      - name: Create Draft Prerelease
+        run: |
+          gh release create "${{ github.ref }}" \
+            --title "Release ${{ github.ref }}" \
+            --notes "Still in experimentation phase" \
+            --draft \
+            --prerelease
+
+      # Upload the binary asset to the newly created release
       - name: Upload Release Binary
-        uses: actions/upload-release-asset@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: api
-          asset_name: api
-          asset_content_type: application/octet-stream
+        run: |
+          gh release upload "${{ github.ref }}" "api" --clobber
