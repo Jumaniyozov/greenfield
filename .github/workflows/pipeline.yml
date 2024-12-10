@@ -116,6 +116,9 @@ jobs:
           export_default_credentials: true
           install_components: "app-engine-go"
 
+      - name: Create App Engine Application
+        run: gcloud app create --region=us-central
+
       - name: Deploy App
         id: deploy
         uses: google-github-actions/deploy-appengine@v1
