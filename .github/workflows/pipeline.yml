@@ -73,6 +73,8 @@ jobs:
 
       # Create a draft pre-release
       - name: Create Draft Prerelease
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           gh release create "${{ github.ref }}" \
             --title "Release ${{ github.ref }}" \
@@ -82,5 +84,7 @@ jobs:
 
       # Upload the binary asset to the newly created release
       - name: Upload Release Binary
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           gh release upload "${{ github.ref }}" "api" --clobber
