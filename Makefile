@@ -24,7 +24,7 @@ check-format:
 	test -z "$$(go fmt ./...)"
 
 static-check:
-	golangci-lint run
+	golangci-lint run --config ./golangci.yml
 
 test:
 	go test ./... -coverprofile=coverage.out
