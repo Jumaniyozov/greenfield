@@ -1,6 +1,6 @@
 GO_VERSION :=1.23.4
 
-.PHONY: install-go init-go build test coverage report
+.PHONY: install-go init-go build test coverage report check-format
 setup: install-go init-go
 
 #TODO add MacOS support
@@ -18,6 +18,10 @@ test:
 
 coverage:
 	go tool cover -func coverage.out | grep "total:" | awk '{print ((int($$3) > 80) != 1) }'
+
+
+check-format:
+	test -z $$(go fmt ./...)
 
 report:
 	go tool cover -html=coverage.out -o cover.html
