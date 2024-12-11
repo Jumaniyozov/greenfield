@@ -56,6 +56,7 @@ jobs:
     needs:
       - format-check
       - vet
+      - lint
     steps:
       - name: Set up Go 1.x
         uses: actions/setup-go@v5
