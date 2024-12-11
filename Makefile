@@ -22,7 +22,6 @@ test:
 coverage:
 	go tool cover -func coverage.out | grep "total:" | awk '{print ((int($$3) > 80) != 1) }'
 
-
 check-format:
 	test -z $$(go fmt ./...)
 
