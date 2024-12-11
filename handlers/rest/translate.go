@@ -1,3 +1,4 @@
+// Package rest provides RESTful HTTP handlers for the application.
 package rest
 
 import (

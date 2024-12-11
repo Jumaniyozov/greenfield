@@ -1,3 +1,4 @@
+// Package translation provides translation functionalities for the application.
 package translation
 
 import "strings"
