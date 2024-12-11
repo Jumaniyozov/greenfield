@@ -1,6 +1,6 @@
 GO_VERSION :=1.23.4
 
-.PHONY: install-go init-go build test coverage report
+.PHONY: install-go init-go build test coverage report check-format
 setup: install-go init-go
 
 #TODO add MacOS support
@@ -12,6 +12,9 @@ install-go:
 init-go:
 	echo 'export PATH=$$PATH:/usr/local/go/bin' >> $${HOME}/.bashrc
 	echo 'export PATH=$$PATH:$${HOME}/go/bin' >> $${HOME}/.bashrc
+
+check-format:
+	test -z $$(go fmt ./...)
 
 test:
 	go test ./... -coverprofile=coverage.out
