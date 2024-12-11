@@ -1,6 +1,6 @@
 GO_VERSION :=1.23.4
 
-.PHONY: install-go init-go build test coverage report check-format install-lint static-check install
+.PHONY: install-go init-go build test coverage report check-format install-lint static-check install copy-hooks
 setup: install-go init-go
 
 install: install-go init-go install-lint
@@ -19,6 +19,10 @@ install-lint:
 	sudo curl -sSfL \
 	https://raw.githubusercontent.com/golangci/golangci-lint/master/install.sh\
 	| sh -s -- -b $$(go env GOPATH)/bin v1.62.2
+
+copy-hooks:
+	chmod +x scripts/hooks/*
+	cp -r scripts/hooks .git/.
 
 check-format:
 	test -z "$$(go fmt ./...)"
