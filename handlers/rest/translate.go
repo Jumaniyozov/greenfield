@@ -12,8 +12,6 @@ type Resp struct {
 	Translation string `json:"translation"`
 }
 
-const defaultLanguage = "english"
-
 func TranslateHandler(w http.ResponseWriter, r *http.Request) {
 	enc := json.NewEncoder(w)
 	w.Header().Set("Content-Type", "application/json; charset=utf-8")
@@ -24,7 +22,6 @@ func TranslateHandler(w http.ResponseWriter, r *http.Request) {
 	word := strings.ReplaceAll(r.URL.Path, "/", "")
 	translationWord := translation.Translate(word, language)
 	if translationWord == "" {
-		language = ""
 		w.WriteHeader(http.StatusNotFound)
 		return
 	}
