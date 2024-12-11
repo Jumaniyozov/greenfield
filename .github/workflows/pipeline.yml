@@ -116,9 +116,6 @@ jobs:
           export_default_credentials: true
           install_components: "app-engine-go"
 
-      - name: Create App Engine Application
-        run: gcloud app create --region=us-central
-
       - name: Deploy App
         id: deploy
         uses: google-github-actions/deploy-appengine@v1
@@ -127,3 +124,21 @@ jobs:
           promote: true
       - id: test
         run: curl "${{ steps.deploy.outputs.url }}/translate/hello"
+
+  qodana:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
+      checks: write
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}  # to check out the actual pull request commit, not the merge commit
+          fetch-depth: 0  # a full history is required for pull request analysis
+      - name: 'Qodana Scan'
+        uses: JetBrains/qodana-action@v2024.2
+        with:
+          args: --linter,jetbrains/qodana-go:2024.2
+        env:
+          QODANA_TOKEN: ${{ secrets.QODANA_TOKEN }}
