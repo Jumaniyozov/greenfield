@@ -10,7 +10,7 @@ import (
 )
 
 func main() {
-	addr := fmt.Sprintf(":%s", os.Getenv("PORT"))
+	addr := fmt.Sprintf(":%s", os.Getenv("PORT"), "error")
 	if addr == ":" {
 		addr = ":8080"
 	}
