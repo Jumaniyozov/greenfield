@@ -5,7 +5,7 @@ import (
 	"net/http"
 )
 
-func HealthCheck(w http.ResponseWriter, r *http.Request) {
+func HealthCheck(w http.ResponseWriter, _ *http.Request) {
 	enc := json.NewEncoder(w)
 	w.Header().Set("Content-Type", "application/json; charset=utf-8")
 	resp := map[string]string{"status": "up"}
