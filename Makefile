@@ -21,13 +21,15 @@ install-lint:
 	| sh -s -- -b $$(go env GOPATH)/bin v1.62.2
 
 check-format:
-	test -z $$(go fmt ./...)
+	test -z "$$(go fmt ./...)"
 
 static-check:
 	golangci-lint run
 
 test:
 	go test ./... -coverprofile=coverage.out
+
+check: check-format static-check test
 
 coverage:
 	go tool cover -func coverage.out | grep "total:" | awk '{print ((int($$3) > 80) != 1) }'
