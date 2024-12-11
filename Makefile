@@ -13,6 +13,9 @@ init-go:
 	echo 'export PATH=$$PATH:/usr/local/go/bin' >> $${HOME}/.bashrc
 	echo 'export PATH=$$PATH:$${HOME}/go/bin' >> $${HOME}/.bashrc
 
+check-format:
+	test -z $$(go fmt ./...)
+
 test:
 	go test ./... -coverprofile=coverage.out
 
