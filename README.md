@@ -8,8 +8,7 @@
 ## Setup
 
 1. Linux based OS
-2. Install Go
-3. Install TaskFile
-4. Check for commands in Taskfile.yaml
+2. Check for commands in Makefile
+3. Install dependencies using `make install`
 
 ## Release Milestones
