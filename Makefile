@@ -31,7 +31,7 @@ static-check:
 	golangci-lint run --config ./golangci.yml
 
 test:
-	go test ./... -coverprofile=coverage.out
+	go test ./... -coverprofile=coverage.out 
 
 check: check-format static-check test
 

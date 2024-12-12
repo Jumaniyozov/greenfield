@@ -3,10 +3,20 @@ package rest_test
 import (
 	"encoding/json"
 	"github.com/jumaniyozov/greenfield/handlers/rest"
+	"github.com/jumaniyozov/greenfield/translation"
 	"net/http"
 	"net/http/httptest"
 	"testing"
 )
+
+//type stubbedService struct{}
+//
+//func (s *stubbedService) Translate(word string, language string) string {
+//	if word == "foo" {
+//		return "bar"
+//	}
+//	return ""
+//}
 
 func TestTranslateAPI(t *testing.T) {
 	tt := []struct {
@@ -35,7 +45,19 @@ func TestTranslateAPI(t *testing.T) {
 		},
 	}
 
-	handler := http.HandlerFunc(rest.TranslateHandler)
+	//	{
+	//	Endpoint:            "/translate/foo?language=GerMan",
+	//		StatusCode:          200,
+	//		ExpectedLanguage:    "german",
+	//		ExpectedTranslation: "bar",
+	//	},
+	//}
+	//
+	//h := rest.NewTranslateHandler(&stubbedService{})
+	//handler := http.HandlerFunc(h.TranslateHandler)
+
+	underTest := rest.NewTranslateHandler(translation.NewStaticService())
+	handler := http.HandlerFunc(underTest.TranslateHandler)
 	for _, test := range tt {
 		rr := httptest.NewRecorder()
 		req, _ := http.NewRequest("GET", test.Endpoint, nil)

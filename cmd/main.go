@@ -2,8 +2,8 @@ package main
 
 import (
 	"fmt"
-	"github.com/jumaniyozov/greenfield/handlers"
 	"github.com/jumaniyozov/greenfield/handlers/rest"
+	"github.com/jumaniyozov/greenfield/translation"
 	"log"
 	"net/http"
 	"os"
@@ -15,9 +15,12 @@ func main() {
 	if addr == ":" {
 		addr = ":8080"
 	}
+
 	mux := http.NewServeMux()
-	mux.HandleFunc("/translate/hello", rest.TranslateHandler)
-	mux.HandleFunc("/health", handlers.HealthCheck)
+	translationService := translation.NewStaticService()
+	translateHandler := rest.NewTranslateHandler(translationService)
+	mux.HandleFunc("/translate/hello", translateHandler.TranslateHandler)
+
 	server := &http.Server{
 		Addr:         addr,
 		Handler:      mux,
